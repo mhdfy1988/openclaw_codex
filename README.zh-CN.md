@@ -49,7 +49,10 @@ English README: [README.md](./README.md)
 ### 方案 B：手工执行
 
 ```powershell
-& "$env:APPDATA\npm\openclaw.cmd" plugins install --link D:\C_Project\OPENCLAW_CODEX
+$pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
+New-Item -ItemType Directory -Force -Path $pluginDir | Out-Null
+Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\README.zh-CN.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
+& "$env:APPDATA\npm\openclaw.cmd" plugins install --link $pluginDir
 & "$env:APPDATA\npm\openclaw.cmd" plugins enable openai-codex-auth
 & "$env:APPDATA\npm\openclaw.cmd" models auth login --provider openai-codex --set-default
 ```
