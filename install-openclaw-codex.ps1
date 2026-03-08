@@ -52,6 +52,7 @@ function Copy-PluginFiles {
 
     $optionalFiles = @(
         "README.md",
+        "README.zh-CN.md",
         "DEPLOY.md",
         "DEPLOY.zh-CN.md",
         "QUICKSTART.zh-CN.md"
