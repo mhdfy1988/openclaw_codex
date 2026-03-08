@@ -18,6 +18,8 @@
 可选文件：
 
 - `README.md`
+- `README.en.md`
+- `README.zh-CN.md`
 - `DEPLOY.md`
 - `DEPLOY.zh-CN.md`
 - `QUICKSTART.zh-CN.md`
@@ -29,7 +31,7 @@
 ```powershell
 $pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
 New-Item -ItemType Directory -Force -Path $pluginDir | Out-Null
-Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
+Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\README.en.md, .\README.zh-CN.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
 ```
 
 如果某些说明文件不存在，把它们从命令里删掉即可。真正必须的只有：

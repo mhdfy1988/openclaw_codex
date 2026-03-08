@@ -17,7 +17,9 @@ The goal is:
   - `index.js`
   - `openclaw.plugin.json`
   - `package.json`
-  - `README.md` (optional)
+  - `README.md` (Chinese primary README, optional)
+  - `README.en.md` (optional)
+  - `README.zh-CN.md` (Chinese alias, optional)
   - `DEPLOY.md` (optional)
 
 This plugin was tested against OpenClaw `2026.3.2`.

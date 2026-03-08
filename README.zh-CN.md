@@ -1,8 +1,8 @@
 # OpenClaw 的 OpenAI Codex OAuth 插件
 
-这个仓库给 OpenClaw 增加了一个 `openai-codex` provider，让 OpenClaw 可以通过 ChatGPT OAuth 直接使用 Codex，而不是依赖 `OPENAI_API_KEY`。
+这个文件是中文 README 的兼容别名。GitHub 仓库首页现在优先显示 [README.md](./README.md)。
 
-English README: [README.md](./README.md)
+English README: [README.en.md](./README.en.md)
 
 ## 当前代码实现了什么
 
@@ -51,7 +51,7 @@ English README: [README.md](./README.md)
 ```powershell
 $pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
 New-Item -ItemType Directory -Force -Path $pluginDir | Out-Null
-Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\README.zh-CN.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
+Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\README.en.md, .\README.zh-CN.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
 & "$env:APPDATA\npm\openclaw.cmd" plugins install --link $pluginDir
 & "$env:APPDATA\npm\openclaw.cmd" plugins enable openai-codex-auth
 & "$env:APPDATA\npm\openclaw.cmd" models auth login --provider openai-codex --set-default

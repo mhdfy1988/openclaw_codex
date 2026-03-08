@@ -17,7 +17,9 @@
   - `index.js`
   - `openclaw.plugin.json`
   - `package.json`
-  - `README.md`（可选）
+  - `README.md`（中文主页，可选）
+  - `README.en.md`（可选）
+  - `README.zh-CN.md`（兼容别名，可选）
   - `DEPLOY.md`（可选）
   - `DEPLOY.zh-CN.md`（可选）
 

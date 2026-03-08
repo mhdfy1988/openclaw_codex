@@ -1,65 +1,65 @@
-# OpenAI Codex OAuth Plugin for OpenClaw
+# OpenClaw 的 OpenAI Codex OAuth 插件
 
-This repository adds an `openai-codex` provider to OpenClaw so Codex can be used as a direct model provider through ChatGPT OAuth instead of an OpenAI API key.
+这个仓库给 OpenClaw 增加了一个 `openai-codex` provider，让 OpenClaw 可以通过 ChatGPT OAuth 直接使用 Codex，而不是依赖 `OPENAI_API_KEY`。
 
-Chinese README: [README.zh-CN.md](./README.zh-CN.md)
+English README: [README.en.md](./README.en.md)
 
-## Current behavior
+## 当前代码实现了什么
 
-The plugin currently:
+当前这版插件会：
 
-- registers provider id `openai-codex`
-- uses ChatGPT OAuth for login and token refresh
-- opens a local callback on `http://localhost:1455/auth/callback`
-- falls back to manual redirect URL or code paste if the callback does not complete automatically
-- writes provider config and agent allowlist entries during `models auth login`
+- 注册 provider id `openai-codex`
+- 使用 ChatGPT OAuth 完成登录和 token 刷新
+- 在本地开启 `http://localhost:1455/auth/callback` 作为回调地址
+- 如果本地回调没有自动完成，允许手动粘贴回调 URL 或授权 code
+- 在执行 `models auth login` 时自动写入 provider 配置和 agent allowlist
 
-Supported model ids in the current code:
+当前代码内置的模型 id：
 
 - `gpt-5.4`
 - `gpt-5.3-codex`
 - `gpt-5.2-codex`
 - `gpt-5.1-codex`
 
-Default model written by the plugin today:
+当前插件写入的默认模型是：
 
 - `openai-codex/gpt-5.4`
 
-## Files
+## 仓库文件说明
 
-- `index.js`: provider registration, OAuth flow, token refresh, config patch
-- `openclaw.plugin.json`: OpenClaw plugin manifest
-- `package.json`: package metadata
-- `install-openclaw-codex.ps1`: local install helper for Windows PowerShell
+- `index.js`：provider 注册、OAuth 流程、token refresh、配置补丁
+- `openclaw.plugin.json`：OpenClaw 插件清单
+- `package.json`：包元数据
+- `install-openclaw-codex.ps1`：Windows PowerShell 安装脚本
 
-## Quick start
+## 快速开始
 
-### Option A: bundled installer script
+### 方案 A：直接用仓库自带安装脚本
 
 ```powershell
 .\install-openclaw-codex.ps1
 ```
 
-Install, enable, login, and set default in one pass:
+如果你想安装完直接进入登录，并把 Codex 设为默认模型：
 
 ```powershell
 .\install-openclaw-codex.ps1 -RunLogin -SetDefault
 ```
 
-### Option B: manual install
+### 方案 B：手工执行
 
 ```powershell
 $pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
 New-Item -ItemType Directory -Force -Path $pluginDir | Out-Null
-Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\README.zh-CN.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
+Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\README.en.md, .\README.zh-CN.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
 & "$env:APPDATA\npm\openclaw.cmd" plugins install --link $pluginDir
 & "$env:APPDATA\npm\openclaw.cmd" plugins enable openai-codex-auth
 & "$env:APPDATA\npm\openclaw.cmd" models auth login --provider openai-codex --set-default
 ```
 
-After login, restart the OpenClaw gateway.
+登录完成后，重启 OpenClaw gateway。
 
-## Verify
+## 验证命令
 
 ```powershell
 & "$env:APPDATA\npm\openclaw.cmd" plugins info openai-codex-auth
@@ -67,16 +67,22 @@ After login, restart the OpenClaw gateway.
 & "$env:APPDATA\npm\openclaw.cmd" models status --json
 ```
 
-`models status --json` is the more reliable auth check.
+判断时优先看：
 
-## Notes
+- `plugins info openai-codex-auth` 是否为 `loaded`
+- `models status --json` 里 `openai-codex` 是否为 `ok`
 
-- This plugin is intended for ChatGPT/Codex OAuth, not `OPENAI_API_KEY`.
-- On older OpenClaw builds, `models list` may show misleading `Auth no` for some Codex model names even when OAuth is already valid.
-- If the browser page says authentication succeeded but the terminal appears stuck, the credential is usually already written; you can stop the command and verify with `models status --json`.
+其中 `models status --json` 比 `models list` 里的 `Auth` 列更可靠。
 
-## More docs
+## 注意事项
 
-- Full deployment notes: [DEPLOY.md](./DEPLOY.md)
-- Chinese deployment notes: [DEPLOY.zh-CN.md](./DEPLOY.zh-CN.md)
-- Chinese quickstart: [QUICKSTART.zh-CN.md](./QUICKSTART.zh-CN.md)
+- 这个插件走的是 ChatGPT/Codex OAuth，不是 OpenAI API key。
+- 在较老的 OpenClaw 版本上，`models list` 可能会对某些 Codex 模型显示误导性的 `Auth no`，但不一定代表认证失败。
+- 如果浏览器已经显示登录成功，但终端看起来像卡住，一般凭据已经写入，可以中断命令后再用 `models status --json` 验证。
+
+## 更多文档
+
+- 中文部署说明：[DEPLOY.zh-CN.md](./DEPLOY.zh-CN.md)
+- 中文速查说明：[QUICKSTART.zh-CN.md](./QUICKSTART.zh-CN.md)
+- 英文部署说明：[DEPLOY.md](./DEPLOY.md)
+- 兼容保留的中文 README：[README.zh-CN.md](./README.zh-CN.md)
