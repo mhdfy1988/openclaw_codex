@@ -2,6 +2,8 @@
 
 这个仓库给 OpenClaw 增加了一个 `openai-codex` provider，让 OpenClaw 可以通过 ChatGPT OAuth 直接使用 Codex，而不是依赖 `OPENAI_API_KEY`。
 
+说明：本插件由 AI 参与论证、设计和编写，最终以当前仓库中的实际代码与文档为准。
+
 English README: [README.en.md](./README.en.md)
 
 ## 当前代码实现了什么

@@ -2,6 +2,8 @@
 
 这个文件是中文 README 的兼容别名。GitHub 仓库首页现在优先显示 [README.md](./README.md)。
 
+说明：本插件由 AI 参与论证、设计和编写，最终以当前仓库中的实际代码与文档为准。
+
 English README: [README.en.md](./README.en.md)
 
 ## 当前代码实现了什么

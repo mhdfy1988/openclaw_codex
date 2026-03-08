@@ -2,6 +2,8 @@
 
 This repository adds an `openai-codex` provider to OpenClaw so Codex can be used as a direct model provider through ChatGPT OAuth instead of an OpenAI API key.
 
+Note: this plugin was analyzed, designed, and implemented with AI assistance. The current repository code and docs are the source of truth.
+
 Chinese README: [README.md](./README.md)
 
 ## Current behavior
