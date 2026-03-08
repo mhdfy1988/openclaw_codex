@@ -123,9 +123,23 @@ copy /Y QUICKSTART.zh-CN.md "%pluginDir%"
 %APPDATA%\npm\openclaw.cmd models auth login --provider openai-codex --set-default
 ```
 
-登录完成后重启 OpenClaw gateway。
+## 5. 重启 Gateway
 
-## 5. 一键验证
+如果你使用的是已安装的 gateway service：
+
+```powershell
+& "$env:APPDATA\npm\openclaw.cmd" gateway restart
+```
+
+`cmd` 里对应是：
+
+```cmd
+%APPDATA%\npm\openclaw.cmd gateway restart
+```
+
+如果你是手工以前台方式运行的 `openclaw gateway run`，就先停止原来的 gateway 进程，再重新启动它。
+
+## 6. 一键验证
 
 PowerShell：
 
@@ -173,7 +187,7 @@ PowerShell：
 - `models status --json` 里 `openai-codex` 应该是 `ok`
 - `models list` 里的 `Auth` 列只能参考，不能作为唯一判断依据
 
-## 6. 最小需要改哪些配置
+## 7. 最小需要改哪些配置
 
 如果走 `plugins install --link` 和 `models auth login`，大多数配置会自动生成。
 
@@ -193,7 +207,7 @@ PowerShell：
 
 - 会生成 `openai-codex:default` 的 OAuth 凭据
 
-## 7. 推荐默认模型
+## 8. 推荐默认模型
 
 如果目标机器还是 OpenClaw `2026.3.2`，建议默认模型先用：
 
@@ -211,7 +225,7 @@ openai-codex/gpt-5.4
 
 只是 `models list` 里可能出现误导性的 `Auth no`。
 
-## 8. 常见问题
+## 9. 常见问题
 
 ### `Unknown provider "openai-codex"`
 

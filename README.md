@@ -124,6 +124,16 @@ copy /Y QUICKSTART.zh-CN.md "%pluginDir%"
 %APPDATA%\npm\openclaw.cmd models auth login --provider openai-codex --set-default
 ```
 
+9. 重启 gateway
+
+如果你使用的是已安装的 gateway service：
+
+```cmd
+%APPDATA%\npm\openclaw.cmd gateway restart
+```
+
+如果你是手工以前台方式运行的 `openclaw gateway run`，就先停止原来的 gateway 进程，再重新启动它。
+
 ## 验证命令
 
 PowerShell：

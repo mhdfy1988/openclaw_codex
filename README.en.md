@@ -59,7 +59,15 @@ Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md
 & "$env:APPDATA\npm\openclaw.cmd" models auth login --provider openai-codex --set-default
 ```
 
-After login, restart the OpenClaw gateway.
+After login, restart the gateway.
+
+If you are using the installed gateway service:
+
+```powershell
+& "$env:APPDATA\npm\openclaw.cmd" gateway restart
+```
+
+If you are running the gateway manually in the foreground with `openclaw gateway run`, stop that process and start it again instead.
 
 ## Verify
 
