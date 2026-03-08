@@ -1,0 +1,148 @@
+# OpenClaw 接入 Codex 快速说明
+
+这是一份最短可执行版本，适合你后续把同一套插件迁移到别的 OpenClaw 环境。
+
+## 1. 最小目录结构
+
+把插件放到固定目录，不要放在会移动的业务工程里。
+
+推荐目录：
+
+```text
+%USERPROFILE%\.openclaw\extensions\openai-codex-auth\
+├─ index.js
+├─ openclaw.plugin.json
+└─ package.json
+```
+
+可选文件：
+
+- `README.md`
+- `DEPLOY.md`
+- `DEPLOY.zh-CN.md`
+- `QUICKSTART.zh-CN.md`
+
+## 2. 一键复制到 OpenClaw 插件目录
+
+在本仓库目录里执行：
+
+```powershell
+$pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
+New-Item -ItemType Directory -Force -Path $pluginDir | Out-Null
+Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md, .\DEPLOY.md, .\DEPLOY.zh-CN.md, .\QUICKSTART.zh-CN.md -Destination $pluginDir
+```
+
+如果某些说明文件不存在，把它们从命令里删掉即可。真正必须的只有：
+
+- `index.js`
+- `openclaw.plugin.json`
+- `package.json`
+
+## 3. 一键安装并启用插件
+
+```powershell
+$pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
+& "$env:APPDATA\npm\openclaw.cmd" plugins install --link $pluginDir
+& "$env:APPDATA\npm\openclaw.cmd" plugins enable openai-codex-auth
+```
+
+也可以直接运行仓库自带脚本：
+
+```powershell
+.\install-openclaw-codex.ps1
+```
+
+如果你想安装后直接进入登录流程：
+
+```powershell
+.\install-openclaw-codex.ps1 -RunLogin -SetDefault
+```
+
+## 4. 一键登录 Codex
+
+```powershell
+& "$env:APPDATA\npm\openclaw.cmd" models auth login --provider openai-codex --set-default
+```
+
+登录完成后重启 OpenClaw gateway。
+
+## 5. 一键验证
+
+```powershell
+& "$env:APPDATA\npm\openclaw.cmd" plugins info openai-codex-auth
+& "$env:APPDATA\npm\openclaw.cmd" models list
+& "$env:APPDATA\npm\openclaw.cmd" models status --json
+```
+
+判断标准：
+
+- `plugins info openai-codex-auth` 能看到 `Status: loaded`
+- `models status --json` 里 `openai-codex` 应该是 `ok`
+- `models list` 里的 `Auth` 列只能参考，不能作为唯一判断依据
+
+## 6. 最小需要改哪些配置
+
+如果走 `plugins install --link` 和 `models auth login`，大多数配置会自动生成。
+
+最终你至少会看到这些关键项：
+
+### `~/.openclaw/openclaw.json`
+
+- `plugins.allow` 包含 `openai-codex-auth`
+- `plugins.load.paths` 包含插件目录
+- `plugins.entries.openai-codex-auth.enabled = true`
+- `models.providers.openai-codex`
+- `auth.profiles.openai-codex:default`
+- `agents.defaults.model.primary`
+- `agents.defaults.models`
+
+### `~/.openclaw/agents/main/agent/auth-profiles.json`
+
+- 会生成 `openai-codex:default` 的 OAuth 凭据
+
+## 7. 推荐默认模型
+
+如果目标机器还是 OpenClaw `2026.3.2`，建议默认模型先用：
+
+```text
+openai-codex/gpt-5.3-codex
+```
+
+原因是这版 OpenClaw 对它的兼容显示更稳定。
+
+如果你只是想保留当前配置，也可以继续用：
+
+```text
+openai-codex/gpt-5.4
+```
+
+只是 `models list` 里可能出现误导性的 `Auth no`。
+
+## 8. 常见问题
+
+### `Unknown provider "openai-codex"`
+
+说明插件没真正加载成功。先查：
+
+```powershell
+& "$env:APPDATA\npm\openclaw.cmd" plugins info openai-codex-auth
+```
+
+### 浏览器显示成功，但终端像卡住
+
+直接：
+
+- `Ctrl + C`
+- 或关掉终端窗口
+
+只要终端里已经出现 OAuth 成功提示，通常凭据已经写入。
+
+### 为什么看到很多 `Auth no`
+
+优先看：
+
+```powershell
+& "$env:APPDATA\npm\openclaw.cmd" models status --json
+```
+
+它比 `models list` 更可靠。

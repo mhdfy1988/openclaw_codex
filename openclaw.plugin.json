@@ -1,0 +1,14 @@
+{
+  "id": "openai-codex-auth",
+  "name": "OpenAI Codex OAuth",
+  "description": "Provider plugin that adds OpenAI Codex OAuth models to OpenClaw.",
+  "version": "0.1.0",
+  "providers": [
+    "openai-codex"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

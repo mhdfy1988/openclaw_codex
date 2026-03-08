@@ -1,0 +1,12 @@
+{
+  "name": "openai-codex-auth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OpenClaw provider plugin for OpenAI Codex OAuth",
+  "type": "module",
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ]
+  }
+}
