@@ -60,10 +60,67 @@ $pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
 .\install-openclaw-codex.ps1 -RunLogin -SetDefault
 ```
 
+如果你习惯用 `cmd`，按下面这样一步一步执行：
+
+1. 进入仓库目录
+
+```cmd
+cd /d D:\C_Project\OPENCLAW_CODEX
+```
+
+2. 设置插件目录
+
+```cmd
+set pluginDir=%USERPROFILE%\.openclaw\extensions\openai-codex-auth
+```
+
+3. 创建目录
+
+```cmd
+mkdir "%pluginDir%"
+```
+
+4. 复制插件文件
+
+```cmd
+copy /Y index.js "%pluginDir%"
+copy /Y openclaw.plugin.json "%pluginDir%"
+copy /Y package.json "%pluginDir%"
+```
+
+5. 复制说明文档
+
+```cmd
+copy /Y README.md "%pluginDir%"
+copy /Y README.en.md "%pluginDir%"
+copy /Y README.zh-CN.md "%pluginDir%"
+copy /Y DEPLOY.md "%pluginDir%"
+copy /Y DEPLOY.zh-CN.md "%pluginDir%"
+copy /Y QUICKSTART.zh-CN.md "%pluginDir%"
+```
+
+6. 安装插件
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins install --link "%pluginDir%"
+```
+
+7. 启用插件
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins enable openai-codex-auth
+```
+
 ## 4. 一键登录 Codex
 
 ```powershell
 & "$env:APPDATA\npm\openclaw.cmd" models auth login --provider openai-codex --set-default
+```
+
+如果你在 `cmd` 里执行，对应命令是：
+
+```cmd
+%APPDATA%\npm\openclaw.cmd models auth login --provider openai-codex --set-default
 ```
 
 登录完成后重启 OpenClaw gateway。
@@ -74,6 +131,14 @@ $pluginDir = Join-Path $env:USERPROFILE ".openclaw\extensions\openai-codex-auth"
 & "$env:APPDATA\npm\openclaw.cmd" plugins info openai-codex-auth
 & "$env:APPDATA\npm\openclaw.cmd" models list
 & "$env:APPDATA\npm\openclaw.cmd" models status --json
+```
+
+`cmd` 里对应是：
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins info openai-codex-auth
+%APPDATA%\npm\openclaw.cmd models list
+%APPDATA%\npm\openclaw.cmd models status --json
 ```
 
 判断标准：

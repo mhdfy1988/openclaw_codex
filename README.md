@@ -61,6 +61,69 @@ Copy-Item -Force .\index.js, .\openclaw.plugin.json, .\package.json, .\README.md
 
 登录完成后，重启 OpenClaw gateway。
 
+### 方案 C：在 CMD 里分步执行
+
+前提：先切到本仓库目录。
+
+```cmd
+cd /d D:\C_Project\OPENCLAW_CODEX
+```
+
+1. 设置插件目录
+
+```cmd
+set pluginDir=%USERPROFILE%\.openclaw\extensions\openai-codex-auth
+```
+
+2. 创建插件目录
+
+```cmd
+mkdir "%pluginDir%"
+```
+
+3. 复制必需文件
+
+```cmd
+copy /Y index.js "%pluginDir%"
+copy /Y openclaw.plugin.json "%pluginDir%"
+copy /Y package.json "%pluginDir%"
+```
+
+4. 复制文档文件
+
+```cmd
+copy /Y README.md "%pluginDir%"
+copy /Y README.en.md "%pluginDir%"
+copy /Y README.zh-CN.md "%pluginDir%"
+copy /Y DEPLOY.md "%pluginDir%"
+copy /Y DEPLOY.zh-CN.md "%pluginDir%"
+copy /Y QUICKSTART.zh-CN.md "%pluginDir%"
+```
+
+5. 安装插件
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins install --link "%pluginDir%"
+```
+
+6. 启用插件
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins enable openai-codex-auth
+```
+
+7. 查看插件状态
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins info openai-codex-auth
+```
+
+8. 登录 Codex
+
+```cmd
+%APPDATA%\npm\openclaw.cmd models auth login --provider openai-codex --set-default
+```
+
 ## 验证命令
 
 ```powershell
