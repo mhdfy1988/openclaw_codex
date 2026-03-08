@@ -126,10 +126,44 @@ copy /Y QUICKSTART.zh-CN.md "%pluginDir%"
 
 ## 验证命令
 
+PowerShell：
+
+1. 查看插件状态
+
 ```powershell
 & "$env:APPDATA\npm\openclaw.cmd" plugins info openai-codex-auth
+```
+
+2. 查看模型列表
+
+```powershell
 & "$env:APPDATA\npm\openclaw.cmd" models list
+```
+
+3. 查看详细认证状态
+
+```powershell
 & "$env:APPDATA\npm\openclaw.cmd" models status --json
+```
+
+CMD：
+
+1. 查看插件状态
+
+```cmd
+%APPDATA%\npm\openclaw.cmd plugins info openai-codex-auth
+```
+
+2. 查看模型列表
+
+```cmd
+%APPDATA%\npm\openclaw.cmd models list
+```
+
+3. 查看详细认证状态
+
+```cmd
+%APPDATA%\npm\openclaw.cmd models status --json
 ```
 
 判断时优先看：
